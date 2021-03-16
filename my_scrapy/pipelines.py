@@ -33,7 +33,9 @@ class MyScrapyPipeline:
         )
         for i in item:
             data = {"schema":{"type":"struct","fields":[{"type":"string","field":"iname"},{"type":"string","field":"iprice"},{"type":"string","field":"ireview"}],"name":"my_hyomin_pit"},"payload":{"iname":i['iname'],"iprice":i['iprice'],"ireview":i['ireview']}}
+            time.sleep(1)
             prod.send('my_hyomin_pit', value = data)
+            time.sleep(1)
             prod.flush()
 
         print('Done, ')
