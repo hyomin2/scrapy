@@ -91,8 +91,8 @@ ITEM_PIPELINES = {
 # FEED_FORMAT = 'json'
 # FEED_URI = 'hyomin_soyeong.json'
 
-# FEED_FORMAT = 'csv'
-# FEED_URI = 'my_news.csv'
+FEED_FORMAT = 'csv'
+FEED_URI = 'my_news.csv'
 
 # FEED_EXPORT_ENCODING = 'utf-8'
 FEED_EXPORT_ENCODING = 'utf-8-sig'

@@ -18,9 +18,12 @@ class MyScrapyPipeline:
 
     # 데이터베이스에 저장하고자하는 코드를 이곳에 입력하면 된다.
     def process_item(self, item, spider):
-        print("- - - - - - - - - - - - - - - - - - - -")
+        # print("- - - - - - - - - - - - - - - - - - - -")
+        # print(item)
+        # print("- - - - - - - - - - - - - - - - - - - -")
+        # print("- - - - - - - - - - - - - - - - - - - -")
         self.storeDB(item)
-        print("Success ------------------")
+        # print("Success ------------------")
         return item
 
 
@@ -28,15 +31,15 @@ class MyScrapyPipeline:
         prod = KafkaProducer(
             acks = 0,
             compression_type = 'gzip',
-            bootstrap_servers = ['54.157.164.90:9092'],
+            bootstrap_servers = ['127.0.0.1:9092'],
             value_serializer = lambda x : dumps(x).encode('utf-8')
         )
-        for i in item:
-            data = {"schema":{"type":"struct","fields":[{"type":"string","field":"iname"},{"type":"string","field":"iprice"},{"type":"string","field":"ireview"}],"name":"my_hyomin_pit"},"payload":{"iname":i['iname'],"iprice":i['iprice'],"ireview":i['ireview']}}
-            time.sleep(1)
-            prod.send('my_hyomin_pit', value = data)
-            time.sleep(1)
-            prod.flush()
+
+        data = {"schema":{"type":"struct","fields":[{"type":"int32","optional":'false',"field":"id"},{"type":"string","optional":'false',"field":"iname"},{"type":"string","optional":'false',"field":"iprice"},{"type":"string","optional":'false',"field":"ireview"}],"optional":'false',"name":"test_pit"},"payload":{"id":700,"iname":item['iname'],"iprice":item['iprice'],"ireview":item['ireview']}}
+        prod.send('my_test_pit', value = data)
+        time.sleep(1)
+        print('data push !')
+        prod.flush()
 
         print('Done, ')
 

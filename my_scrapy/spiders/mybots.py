@@ -18,15 +18,22 @@ class MybotsSpider(scrapy.Spider):
     # 결과값
     def parse(self, response):
         items = []
+
         iname = response.xpath('//*[@id="contents"]/fieldset[2]/div/div[3]/ul/li/p[1]/a/text()').extract()
         iprice = response.xpath('//*[@id="contents"]/fieldset[2]/div/div[3]/ul/li/p[2]/strong/text()').extract()
         ireview = response.xpath('//*[@id="contents"]/fieldset[2]/div/div[3]/ul/li/p[4]/span/a/strong/text()').extract()
-        print(len(iname))
-        print(len(iprice))
-        print(len(ireview))
+        
+        # print(iname)
+        # print(iprice)
+        # print(ireview)
+        
+        
+        # print(len(iname))
+        # print(len(iprice))
+        # print(len(ireview))
 
-        item = MyScrapyItem()
         for i in range(len(iname)):
+            item = MyScrapyItem()
             item['iname'] = iname[i]
             item['iprice'] = iprice[i]
             item['ireview'] = ireview[i]
